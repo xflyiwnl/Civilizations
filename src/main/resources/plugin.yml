@@ -1,0 +1,10 @@
+name: Civilizations
+version: '${project.version}'
+main: me.xflyiwnl.civilizations.Civilizations
+api-version: '1.16'
+
+commands:
+  map:
+  area:
+  scenario:
+  editor:

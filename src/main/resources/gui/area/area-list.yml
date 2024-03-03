@@ -1,0 +1,42 @@
+gui:
+  title: "Список территории"
+  rows: 5
+  mask:
+    - "BBBBBBBBB"
+    - "POOOOOOON"
+    - "POOOSOOON"
+    - "POOOOOOON"
+    - "BBBBBBBBB"
+
+area-item:
+  material: paper
+  name: "#FFF4D6Территория: #FCD05C%area%"
+  lore:
+    - " "
+    - " #FFF4D6Название: #FCD05C%area%"
+    - " #FFF4D6Карта: #FCD05C%map%"
+    - " #FFF4D6Регионы: #FCD05C%count%"
+    - " "
+
+items:
+  border-item:
+    material: "black_stained_glass_pane"
+    amount: 1
+    name: " "
+    mask: "B"
+
+  next-item:
+    material: "lime_stained_glass_pane"
+    amount: 1
+    name: "#6CE25FСледующая страница"
+    action:
+      - "[next]"
+    mask: "N"
+
+  prev-item:
+    material: "red_stained_glass_pane"
+    amount: 1
+    name: "#ED4040Предыдущая страница"
+    action:
+      - "[prev]"
+    mask: "P"

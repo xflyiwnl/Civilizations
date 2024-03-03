@@ -1,0 +1,44 @@
+gui:
+  title: "Список карт"
+  rows: 5
+  mask:
+    - "BBBBBBBBB"
+    - "POOOOOOON"
+    - "POOOSOOON"
+    - "POOOOOOON"
+    - "BBBBBBBBB"
+
+map-item:
+  material: grass_block
+  name: "#FFF4D6Карта: #FCD05C%map%"
+  lore:
+    - " "
+    - " #FFF4D6Название: #FCD05C%map%"
+    - " #FFF4D6Спавн: #FCD05C%spawn%"
+    - " "
+    - " #FFF4D6Начало: #FCD05C%start%"
+    - " #FFF4D6Конец: #FCD05C%end%"
+    - " "
+
+items:
+  border-item:
+    material: "black_stained_glass_pane"
+    amount: 1
+    name: " "
+    mask: "B"
+
+  next-item:
+    material: "lime_stained_glass_pane"
+    amount: 1
+    name: "#6CE25FСледующая страница"
+    action:
+      - "[next]"
+    mask: "N"
+
+  prev-item:
+    material: "red_stained_glass_pane"
+    amount: 1
+    name: "#ED4040Предыдущая страница"
+    action:
+      - "[prev]"
+    mask: "P"
