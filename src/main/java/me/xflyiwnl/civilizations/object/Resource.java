@@ -19,4 +19,13 @@ public enum Resource {
         return name;
     }
 
+    public static Resource getResource(String name) {
+        for (Resource resource : Resource.values()) {
+            if (resource.getName().equalsIgnoreCase(name)) {
+                return resource;
+            }
+        }
+        return null;
+    }
+
 }

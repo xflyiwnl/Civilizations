@@ -8,15 +8,30 @@ gui:
     - "BOOOOOOOB"
     - "BBRPRNRBB"
 
-area-item:
-  material: paper
-  name: "#FFF4D6Территория: #FCD05C%area%"
+region-item:
+  material: campfire
+  name: "#FFF4D6Регион: #FCD05C%region%"
   lore:
     - " "
-    - " #FFF4D6Название: #FCD05C%area%"
-    - " #FFF4D6Карта: #FCD05C%map%"
-    - " #FFF4D6Регионы: #FCD05C%count%"
+    - " #FFF4D6Название: #FCD05C%region%"
+    - " #FFF4D6Территория: #F1B823%area%"
+    - " #FFF4D6Размер: #FCD05C%blocks% блоков."
     - " "
+    - " #FFF4D6Население: #6CE25F%residents%"
+    - " #FFF4D6Тип: #ED4040%type%"
+    - " #FFF4D6Город: #FCD05C%city%"
+    - " "
+    - " #FFF4D6Соседи"
+    - "%neighbours%"
+    - " "
+    - " #FFF4D6Ресурсы"
+    - "%resources%"
+    - " "
+    - " #6CE25FЛКМ, чтобы выбрать регион"
+    - " #ED4040ПКМ, чтобы удалить регион"
+    - " "
+  list-format: " &7- #F1B823%text%"
+  list-empty: "   &7Пусто"
 
 items:
 

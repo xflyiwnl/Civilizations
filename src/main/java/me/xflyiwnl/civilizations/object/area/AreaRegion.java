@@ -2,6 +2,8 @@ package me.xflyiwnl.civilizations.object.area;
 
 import me.xflyiwnl.civilizations.Civilizations;
 import me.xflyiwnl.civilizations.object.*;
+import me.xflyiwnl.civilizations.util.ColorUtil;
+import org.bukkit.Material;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -13,14 +15,23 @@ public class AreaRegion extends CivObject implements Saveable {
     private Area area;
 
     private Point city;
-    private long residents;
+    private long residents = 10000;
 
     private LandType type = LandType.PLAINS;
+
+    private List<UUID> neighbours = new ArrayList<>();
 
     private List<Point> blocks = new ArrayList<>();
     private HashMap<Resource, Integer> resources = new HashMap<>();
 
+    private Material material = ColorUtil.randomizeColor();
+
     public AreaRegion() {
+    }
+
+    public AreaRegion(Area area, String name) {
+        super(name);
+        this.area = area;
     }
 
     public AreaRegion(Area area, String name, Point city, long residents) {
@@ -30,7 +41,7 @@ public class AreaRegion extends CivObject implements Saveable {
         this.residents = residents;
     }
 
-    public AreaRegion(Area area, UUID uniqueId, String name, Point city, long residents, LandType type, List<Point> blocks, HashMap<Resource, Integer> resources) {
+    public AreaRegion(Area area, UUID uniqueId, String name, Point city, long residents, LandType type, List<Point> blocks, HashMap<Resource, Integer> resources, List<UUID> neighbours) {
         super(uniqueId, name);
         this.area = area;
         this.city = city;
@@ -38,6 +49,7 @@ public class AreaRegion extends CivObject implements Saveable {
         this.type = type;
         this.blocks = blocks;
         this.resources = resources;
+        this.neighbours = neighbours;
     }
 
     @Override
@@ -102,5 +114,21 @@ public class AreaRegion extends CivObject implements Saveable {
 
     public void setResources(HashMap<Resource, Integer> resources) {
         this.resources = resources;
+    }
+
+    public List<UUID> getNeighbours() {
+        return neighbours;
+    }
+
+    public void setNeighbours(List<UUID> neighbours) {
+        this.neighbours = neighbours;
+    }
+
+    public Material getMaterial() {
+        return material;
+    }
+
+    public void setMaterial(Material material) {
+        this.material = material;
     }
 }

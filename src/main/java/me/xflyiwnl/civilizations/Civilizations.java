@@ -12,10 +12,8 @@ import me.xflyiwnl.civilizations.listener.PlayerListener;
 import me.xflyiwnl.civilizations.object.CivMap;
 import me.xflyiwnl.civilizations.object.CivPlayer;
 import me.xflyiwnl.civilizations.object.area.Area;
-import me.xflyiwnl.civilizations.object.helper.CivAction;
-import me.xflyiwnl.civilizations.object.helper.CivBar;
-import me.xflyiwnl.civilizations.object.helper.CivBoard;
-import me.xflyiwnl.civilizations.object.helper.CivRunnable;
+import me.xflyiwnl.civilizations.object.helper.*;
+import me.xflyiwnl.civilizations.object.helper.reply.ReplyAction;
 import me.xflyiwnl.civilizations.util.TextUtil;
 import me.xflyiwnl.colorfulgui.ColorfulGUI;
 import org.bukkit.Bukkit;
@@ -110,6 +108,13 @@ public final class Civilizations extends JavaPlugin {
     public void sendTitle(Player player, String title, String subtitle) {
         if (player == null || !player.isOnline()) return;
         player.sendTitle(TextUtil.colorize(title), TextUtil.colorize(subtitle), 20, 20, 20);
+    }
+
+    public void createReply(CivPlayer player, String message, ReplyAction onChat) {
+        CivReply reply = new CivReply(message, onChat);
+        player.setReply(reply);
+
+        player.sendMessage(message);
     }
 
     public CivRunnable createRunnable(CivAction action, int time) {

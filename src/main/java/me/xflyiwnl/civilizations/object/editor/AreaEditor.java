@@ -8,6 +8,7 @@ import me.xflyiwnl.civilizations.object.area.AreaRegion;
 import me.xflyiwnl.civilizations.object.helper.CivBar;
 import me.xflyiwnl.civilizations.object.helper.CivBoard;
 import me.xflyiwnl.civilizations.object.helper.CivRunnable;
+import me.xflyiwnl.civilizations.object.helper.tool.ToolType;
 import me.xflyiwnl.civilizations.util.Translator;
 import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BarStyle;
@@ -82,6 +83,12 @@ public class AreaEditor implements Editor {
         bar.remove();
 
         map.setEditor(null);
+
+        getPlayers().forEach(player -> {
+            player.changeTool(null);
+            player.setReply(null);
+        });
+
     }
 
     @Override
@@ -96,6 +103,8 @@ public class AreaEditor implements Editor {
         if (map.getSpawn() != null)
             player.getPlayer().teleport(map.getSpawn());
 
+        player.changeTool(ToolType.EDITOR_AREA);
+
         player.sendMessage(Translator.ofString("editor.enter"));
 
     }
@@ -107,6 +116,9 @@ public class AreaEditor implements Editor {
 
         bar.hide(player.getPlayer());
         board.hide(player.getPlayer());
+
+        player.changeTool(null);
+        player.setReply(null);
 
         player.sendMessage(Translator.ofString("editor.quit"));
     }
@@ -143,5 +155,33 @@ public class AreaEditor implements Editor {
 
     public AreaRegion getRegion() {
         return region;
+    }
+
+    public void setArea(Area area) {
+        this.area = area;
+    }
+
+    public void setMap(CivMap map) {
+        this.map = map;
+    }
+
+    public void setBar(CivBar bar) {
+        this.bar = bar;
+    }
+
+    public void setBoard(CivBoard board) {
+        this.board = board;
+    }
+
+    public void setRunnable(CivRunnable runnable) {
+        this.runnable = runnable;
+    }
+
+    public void setRegion(AreaRegion region) {
+        this.region = region;
+    }
+
+    public void setPlayers(List<CivPlayer> players) {
+        this.players = players;
     }
 }

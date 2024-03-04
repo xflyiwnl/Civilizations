@@ -4,19 +4,15 @@ import me.xflyiwnl.civilizations.Civilizations;
 import me.xflyiwnl.civilizations.object.CivPlayer;
 import me.xflyiwnl.civilizations.object.Point;
 import me.xflyiwnl.civilizations.object.area.Area;
-import me.xflyiwnl.civilizations.object.editor.AreaEditor;
-import me.xflyiwnl.civilizations.object.editor.Editor;
 import me.xflyiwnl.civilizations.object.editor.EditorType;
 import me.xflyiwnl.civilizations.task.CivTask;
 import me.xflyiwnl.civilizations.util.Settinger;
-import me.xflyiwnl.civilizations.util.TextUtil;
 import me.xflyiwnl.civilizations.util.Translator;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.SoundCategory;
 import org.bukkit.block.Block;
-import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -67,22 +63,17 @@ public class AreaLoadTask implements CivTask {
         civPlayer.sendMessage(Translator.ofString("editor.start-fill"));
 
         int all = blocks.size(); // количество блоков
-        int canIterate = 3000; // сколько сможет итерировать сервер, мощность сервера
+        int canIterate = 5000; // сколько сможет итерировать сервер, мощность сервера
 
-        int time = blocks.size() / canIterate; // сколько времени будем итерировать
+        int time = 1; // сколько времени будем итерировать
+        if (blocks.size() > canIterate)
+            time = blocks.size() / canIterate;
         int count = blocks.size() / time; // сколько будет сервер итерировать в итоге
 
         Civilizations.getInstance().createRunnable(() -> {
             if (blocks.isEmpty()) {
-                civPlayer.sendMessage(Translator.ofString("editor.loaded"));
-
-                Editor editor = new AreaEditor(area);
-
-                area.getMap().setEditor(editor);
-                editor.enable();
-
-                editor.addPlayer(civPlayer);
-
+                AreaRegionsTask regionTask = new AreaRegionsTask(area, civPlayer);
+                regionTask.execute();
                 return true;
             }
 

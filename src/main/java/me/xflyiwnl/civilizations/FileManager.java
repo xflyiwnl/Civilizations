@@ -16,10 +16,20 @@ public class FileManager {
         settings = new YAML("settings.yml");
 
         createFolders();
+        createGui();
     }
 
     public YAML get(String path) {
         return new YAML(path);
+    }
+
+    public void createGui() {
+        List<String> guis = Arrays.asList(
+                "gui/area/area-list.yml",
+                "gui/editor/region-list.yml",
+                "gui/map/map-list.yml"
+        );
+        guis.forEach(this::get);
     }
 
     public void createFolders() {

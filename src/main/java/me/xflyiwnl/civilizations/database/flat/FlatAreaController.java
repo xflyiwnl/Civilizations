@@ -101,6 +101,8 @@ public class FlatAreaController extends DataController<Area, String> {
                 region.setArea(area);
 
                 area.getRegions().add(region);
+
+                System.out.println("loaded=" + region.getName());
             }
         }
 
@@ -131,9 +133,14 @@ public class FlatAreaController extends DataController<Area, String> {
                     .map(FormatUtil::unformatPoint)
                     .collect(Collectors.toList()));
 
+        if (yaml.contains("neighbours"))
+            region.setNeighbours(yaml.getStringList("neighbours").stream()
+                    .map(UUID::fromString)
+                    .collect(Collectors.toList()));
+
         if (yaml.isConfigurationSection("resources"))
             yaml.getConfigurationSection("resources").getKeys(false).forEach(s -> {
-                region.getResources().put(Resource.valueOf(yaml.getString(s.toUpperCase())),
+                region.getResources().put(Resource.valueOf(s.toUpperCase()),
                         yaml.getInt("resources." + s));
             });
 
@@ -216,7 +223,9 @@ public class FlatAreaController extends DataController<Area, String> {
         regionYaml.set("uniqueId", region.getUniqueId().toString());
         regionYaml.set("name", region.getName());
 
-        regionYaml.set("city", FormatUtil.formatLocation(region.getCity().asLocation()));
+        if (region.getCity() != null)
+            regionYaml.set("city", FormatUtil.formatLocation(region.getCity().asLocation()));
+
         regionYaml.set("residents", region.getResidents());
 
         regionYaml.set("type", region.getType().toString());
@@ -228,6 +237,10 @@ public class FlatAreaController extends DataController<Area, String> {
             regionYaml.set("resources." + resource.toString(), count);
 
         }
+
+        regionYaml.set("neighbours", region.getNeighbours().stream()
+                .map(String::valueOf)
+                .collect(Collectors.toList()));
 
         try {
             regionYaml.save(regionFile);

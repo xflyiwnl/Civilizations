@@ -1,69 +1,45 @@
 package me.xflyiwnl.civilizations.task.editor;
 
 import me.xflyiwnl.civilizations.Civilizations;
-import me.xflyiwnl.civilizations.object.CivMap;
 import me.xflyiwnl.civilizations.object.CivPlayer;
 import me.xflyiwnl.civilizations.object.Point;
 import me.xflyiwnl.civilizations.object.area.Area;
+import me.xflyiwnl.civilizations.object.area.AreaRegion;
 import me.xflyiwnl.civilizations.object.editor.AreaEditor;
 import me.xflyiwnl.civilizations.object.editor.Editor;
 import me.xflyiwnl.civilizations.task.CivTask;
 import me.xflyiwnl.civilizations.util.Settinger;
-import me.xflyiwnl.civilizations.util.TextUtil;
 import me.xflyiwnl.civilizations.util.Translator;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.SoundCategory;
 import org.bukkit.block.Block;
-import org.bukkit.entity.Player;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
-public class AreaResetTask implements CivTask {
+public class AreaRegionsTask implements CivTask {
 
-    private Player player;
+    private Area area;
     private CivPlayer civPlayer;
-    private CivMap map;
 
-    public AreaResetTask(Player player, CivPlayer civPlayer, CivMap map) {
-        this.player = player;
-        this.civPlayer = civPlayer;
-        this.map = map;
+    public AreaRegionsTask(Area area, CivPlayer player) {
+        this.area = area;
+        this.civPlayer = player;
     }
 
     @Override
     public void execute() {
 
-        civPlayer.sendMessage(Translator.ofString("editor.reset-map")
-                .replace("%map%", map.getFormattedName()));
+        civPlayer.sendMessage(Translator.ofString("editor.load-regions"));
 
-        Point startPoint = map.getStartPoint();
-        Point endPoint = map.getEndPoint();
+        Map<Point, AreaRegion> blocks = new HashMap<>();
 
-        List<Location> blocks = new ArrayList<>();
-
-        int y = startPoint.getY();
-        for (int x = startPoint.getX(); x <= endPoint.getX(); x++) {
-            for (int z = startPoint.getZ(); z <= endPoint.getZ(); z++) {
-                Location location = new Location(startPoint.getWorld(), x, y, z);
-                Block block = location.getBlock();
-
-                if (block.getType() == Material.WATER) continue;
-
-                blocks.add(location);
+        for (AreaRegion region : area.getRegions()) {
+            for (Point block : region.getBlocks()) {
+                blocks.put(block, region);
             }
         }
-
-        if (blocks.isEmpty()) {
-            civPlayer.sendMessage(Translator.ofString("editor.unknown-error"));
-            return;
-        }
-
-        civPlayer.sendMessage(Translator.ofString("editor.blocks-found")
-                .replace("%count%", String.valueOf(blocks.size())));
-        civPlayer.sendMessage(Translator.ofString("editor.start-reset"));
 
         int all = blocks.size(); // количество блоков
         int canIterate = 5000; // сколько сможет итерировать сервер, мощность сервера
@@ -71,29 +47,43 @@ public class AreaResetTask implements CivTask {
         int time = 1; // сколько времени будем итерировать
         if (blocks.size() > canIterate)
             time = blocks.size() / canIterate;
-
         int count = blocks.size() / time; // сколько будет сервер итерировать в итоге
 
         Civilizations.getInstance().createRunnable(() -> {
             if (blocks.isEmpty()) {
-                civPlayer.sendMessage(Translator.ofString("editor.reseted"));
+                civPlayer.sendMessage(Translator.ofString("editor.loaded"));
+
+                Editor editor = new AreaEditor(area);
+
+                area.getMap().setEditor(editor);
+                editor.enable();
+
+                editor.addPlayer(civPlayer);
+
                 return true;
             }
 
-            List<Location> deleteBlocks = new ArrayList<>();
+            Iterator<Map.Entry<Point, AreaRegion>> iterator = blocks.entrySet().iterator();
             int iteratedCount = 0;
-            for (int i = 0; i < blocks.size() && iteratedCount < count; i++) {
-                Location location = blocks.get(i);
+            while (iterator.hasNext() && iteratedCount < count) {
+                Map.Entry<Point, AreaRegion> entry = iterator.next();
+
+                Point point = entry.getKey();
+                AreaRegion region = entry.getValue();
+                Location location = point.asLocation();
                 Block block = location.getBlock();
 
-                if (block.getType() != Material.BEDROCK)
-                    block.setType(Material.BEDROCK);
+                if (block.getType() != Material.WHITE_WOOL) {
+                    region.getBlocks().remove(point);
+                    iterator.remove();
+                    continue;
+                }
 
-                deleteBlocks.add(location);
+                block.setType(region.getMaterial());
+
+                iterator.remove();
                 iteratedCount++;
             }
-
-            blocks.removeAll(deleteBlocks);
 
             int percent = (int) (((double) blocks.size() / all) * 100);
             Civilizations.getInstance().sendTitle(civPlayer.getPlayer(),
@@ -103,7 +93,6 @@ public class AreaResetTask implements CivTask {
                             .replace("%all%", String.valueOf(all))
                             .replace("%percent%", String.valueOf(100 - percent))
             );
-
             if (civPlayer.isOnline())
                 civPlayer.getPlayer().playSound(civPlayer.getPlayer().getLocation(), Sound.UI_BUTTON_CLICK, SoundCategory.PLAYERS, 1f, 1f);
 

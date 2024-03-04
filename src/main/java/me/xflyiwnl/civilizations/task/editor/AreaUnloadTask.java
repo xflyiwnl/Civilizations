@@ -38,6 +38,8 @@ public class AreaUnloadTask implements CivTask {
         if (map.hasEditor())
             map.getEditor().disable();
 
+        area.save();
+
         AreaResetTask resetTask = new AreaResetTask(player, civPlayer, area.getMap());
         resetTask.execute();
 

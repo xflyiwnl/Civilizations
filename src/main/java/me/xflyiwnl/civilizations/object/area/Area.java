@@ -3,6 +3,7 @@ package me.xflyiwnl.civilizations.object.area;
 import me.xflyiwnl.civilizations.Civilizations;
 import me.xflyiwnl.civilizations.object.CivMap;
 import me.xflyiwnl.civilizations.object.CivObject;
+import me.xflyiwnl.civilizations.object.Point;
 import me.xflyiwnl.civilizations.object.Saveable;
 
 import java.util.ArrayList;
@@ -26,6 +27,29 @@ public class Area extends CivObject implements Saveable {
         super(uniqueId, name);
         this.map = map;
         this.areaRegions = areaRegions;
+    }
+
+    public void removeRegion(AreaRegion region) {
+        areaRegions.remove(region);
+        region.remove();
+    }
+
+    public AreaRegion getRegion(Point point) {
+        return areaRegions.stream()
+                .filter(region -> region.getBlocks().contains(point))
+                .findFirst().orElse(null);
+    }
+
+    public AreaRegion getRegion(String name) {
+        return areaRegions.stream()
+                .filter(region -> region.getName().equals(name))
+                .findFirst().orElse(null);
+    }
+
+    public AreaRegion getRegion(UUID uniqueId) {
+        return areaRegions.stream()
+                .filter(region -> region.getUniqueId().equals(uniqueId))
+                .findFirst().orElse(null);
     }
 
     @Override

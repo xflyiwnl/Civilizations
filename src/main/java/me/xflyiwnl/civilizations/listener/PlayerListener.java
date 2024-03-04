@@ -15,7 +15,10 @@ public class PlayerListener implements Listener {
         Player player = event.getPlayer();
         CivPlayer civPlayer = Civilizations.getInstance().getCivPlayer(player);
 
-        if (civPlayer != null) return;
+        if (civPlayer != null) {
+            civPlayer.changeTool(civPlayer.getTool() != null ? civPlayer.getTool().getType() : null);
+            return;
+        }
 
         civPlayer = new CivPlayer(player.getUniqueId());
         civPlayer.create(true);

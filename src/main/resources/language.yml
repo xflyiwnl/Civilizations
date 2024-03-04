@@ -3,10 +3,14 @@ language:
   prefix: " #FCD05CЦивилизация &7⇒ #FFF4D6"
   console-error: " #FCD05CЦивилизация &7⇒ #FFF4D6извините, но данная команда только для живых игроков"
   args-error: " #FCD05CЦивилизация &7⇒ #FFF4D6недостаточно аргументов для полной команды"
+  number-exception: " #FCD05CЦивилизация &7⇒ #ED4040Ошибка! #FFF4D6Вы ввели неправильную цифру"
 
   other:
     yes-word: "#6CE25FДа"
     no-word: "#ED4040Нет"
+
+  player:
+    reply-error: " #FCD05CЦивилизация &7⇒ #FFF4D6вы не ответили на предыдущий вопрос"
 
   map:
     command-args:
@@ -47,6 +51,8 @@ language:
     created: " #FCD05CЦивилизация &7⇒ #FFF4D6вы #6CE25Fсоздали #FFF4D6территорию #F1B823%name% #FCD05(%map%)"
     removed: " #FCD05CЦивилизация &7⇒ #FFF4D6вы #ED4040удалили #FFF4D6территорию #F1B823%name% #FCD05(%map%)"
 
+  scenario:
+
   editor:
     command-args:
       - " "
@@ -66,6 +72,7 @@ language:
     editor-type: " #FCD05CЦивилизация &7⇒ #FFF4D6вход в режим редактора, тип - #F1B823%type%"
     load-area: " #FCD05CЦивилизация &7⇒ #FFF4D6идёт процедура итераций территории #F1B823%area%"
     reset-map: " #FCD05CЦивилизация &7⇒ #FFF4D6идёт процедура сброса карты #F1B823%map%"
+    load-regions: " #FCD05CЦивилизация &7⇒ #FFF4D6идёт процедура загрузки регионов"
 
     blocks-found: " #FCD05CЦивилизация &7⇒ #FFF4D6найдено #F1B823%count% блоков. #FFF4D6для итерации"
 
@@ -80,3 +87,30 @@ language:
 
     no-blocks: " #FCD05CЦивилизация &7⇒ #FFF4D6произошла ошибка, попробуйте сбросить - #F1B823/editor reset [карта]"
     unknown-error: " #FCD05CЦивилизация &7⇒ #FFF4D6произошла ошибка"
+
+    area:
+      no-selected-region: " #FCD05CЦивилизация &7⇒ #FFF4D6вы не выбрали регион"
+      already-selected-region: " #FCD05CЦивилизация &7⇒ #FFF4D6вы уже выбрали этот регион"
+
+      select-region: " #FCD05CЦивилизация &7⇒ #FFF4D6вы выбрали регион - #F1B823%region%"
+      create-region: " #FCD05CЦивилизация &7⇒ #FFF4D6вы #6CE25Fсоздали #FFF4D6регион - #F1B823%region%"
+      create-region-chat: " #FCD05CЦивилизация &7⇒ #FFF4D6введите в чат название региона"
+      remove-region: " #FCD05CЦивилизация &7⇒ #FFF4D6вы #ED4040удалили #FFF4D6регион - #F1B823%region%"
+      remove-cancel: " #FCD05CЦивилизация &7⇒ #FFF4D6вы отменили удаление региона"
+      remove-question: " #FCD05CЦивилизация &7⇒ #FFF4D6вы уверены, что хотите #ED4040удалить #FFF4D6регион - #F1B823%region%? &7(да / нет)"
+
+      region-format: " #FCD05CЦивилизация &7⇒ #FFF4D6неправильный формат названия региона"
+
+      region-exists: " #FCD05CЦивилизация &7⇒ #FFF4D6такой регион уже существует"
+      region-not-exists: " #FCD05CЦивилизация &7⇒ #FFF4D6такой регион не существует"
+
+      radius-change: " #FCD05CЦивилизация &7⇒ #FFF4D6радиус рисования изменён на - #F1B823%radius%"
+
+      add-neighbour: " #FCD05CЦивилизация &7⇒ #FFF4D6вы #6CE25Fдобавили #FFF4D6соседа - #F1B823%region%"
+      remove-neighbour: " #FCD05CЦивилизация &7⇒ #FFF4D6вы #ED4040удалили #FFF4D6нового соседа - #F1B823%region%"
+
+      resource-question: " #FCD05CЦивилизация &7⇒ #FFF4D6Введите в чат название и количество ресурса. &7(Нефть, 5)"
+      resource-not-found: "  #FCD05CЦивилизация &7⇒ #FFF4D6Такого ресурса не существует"
+
+      added-resource: " #FCD05CЦивилизация &7⇒ #FFF4D6вы добавили ресурс #F1B823%resource%#FFF4D6, его количество - #6CE25F%count%"
+

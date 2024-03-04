@@ -10,12 +10,15 @@ gui:
 
 area-item:
   material: paper
-  name: "#FFF4D6Территория: #FCD05C%area%"
+  name: "#FFF4D6Сценарий: #FCD05C%scenario%"
   lore:
     - " "
-    - " #FFF4D6Название: #FCD05C%area%"
+    - " #FFF4D6Название: #FCD05C%scenario%"
+    - " #FFF4D6Территория: #FCD05C%area%"
     - " #FFF4D6Карта: #FCD05C%map%"
-    - " #FFF4D6Регионы: #FCD05C%count%"
+    - " "
+    - " #FFF4D6Страны: #FCD05C%country%"
+    - " #FFF4D6Год: #FCD05C%year%"
     - " "
 
 items:
